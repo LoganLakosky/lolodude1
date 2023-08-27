@@ -1,0 +1,125 @@
+.todoMainContainer {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+}
+
+.todoMainTop {
+  margin-top: 15px;
+  display: flex;
+  width: 100%;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  font-size: 15px;
+  gap: 30px;
+  animation: fadeIn 0.8s;
+}
+
+.startTodoCreationBtn {
+  display: flex;
+  width: 100px;
+  height: 100%;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+}
+
+.todoMainContentContainer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  justify-content: center;
+}
+
+.titleInputContainer {
+  display: flex;
+  height: 100%;
+  width: 125px;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.titleInput {
+  padding: 4px 0px 4px 4px;
+}
+
+.bodyInputContainer {
+  display: flex;
+  height: 100%;
+  width: 125px;
+  flex-direction: column;
+  gap: 2px;
+}
+
+.createTodoBtn {
+  display: flex;
+  margin-top: 10px;
+  width: 100px;
+  height: 90%;
+  border-radius: 4px;
+  justify-content: center;
+  align-items: center;
+}
+
+.todosContainer {
+  display: grid;
+  width: 80%;
+  height: 90%;
+  grid-template-columns: 1fr 1fr;
+  margin-top: 15px;
+  align-items: center;
+}
+
+.todoContainer {
+  position: relative;
+  display: flex;
+  width: 90%;
+  height: 90%;
+  align-items: center;
+  flex-direction: column;
+  border: 2px solid white;
+}
+
+.todoTopContainer {
+  display: flex;
+  width: 100%;
+  height: 25px;
+  justify-content: center;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.TodoBtn {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  opacity: 0;
+  top: 0px;
+}
+
+.fadeOut {
+  opacity: 0;
+  animation: fadeTextOut 1s;
+}
+
+@keyframes fadeTextOut {
+  0% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

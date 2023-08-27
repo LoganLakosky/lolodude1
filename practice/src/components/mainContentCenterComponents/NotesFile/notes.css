@@ -1,0 +1,49 @@
+.notesMainContainer {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  align-items: center;
+  flex-direction: column;
+}
+
+.notesMainTop {
+  display: flex;
+  width: 100%;
+  height: 25%;
+  justify-content: center;
+  align-items: center;
+  gap: 30px;
+}
+
+.newNoteNameContainer {
+  display: flex;
+  width: 40%;
+  height: 100%;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+}
+
+.newNoteNameContainer label {
+  margin-right: 35px;
+  margin-bottom: 4px;
+}
+
+.newNoteNameContainer input {
+  padding: 5px 0px 5px 4px;
+}
+
+.createNoteBtnContainer {
+  display: flex;
+  width: 20%;
+  justify-content: center;
+  align-items: center;
+  margin-top: 20px;
+}
+
+.createNoteBtn {
+  width: 100%;
+  height: 25px;
+  padding: 2px;
+  border-radius: 6px;
+}
