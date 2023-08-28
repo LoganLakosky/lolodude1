@@ -5,7 +5,7 @@ import "./styleSheets/MainContent.css";
 import { useState } from "react";
 import Todo from "./mainContentCenterComponents/TodoFile/Todo";
 import Twitter from "./mainContentCenterComponents/TwitterFile/Twitter";
-import Notes from "./mainContentCenterComponents/NotesFile/Notes";
+import Notes from "./mainContentCenterComponents/NotesFile/NotesTop";
 import ImgConverter from "./mainContentCenterComponents/ImgConverterFile/ImgConverter";
 import Settigns from "./mainContentCenterComponents/SettingsFile/Settings";
 
@@ -110,7 +110,7 @@ export default function MainContent({ boxShadowColor }: MainContentProps) {
       <div className="mainContentCenter">
         {showTodos && <Todo borderColor={boxShadowColor} />}
         {showTwitter && <Twitter />}
-        {showNotes && <Notes />}
+        {showNotes && <Notes borderColor={boxShadowColor} />}
         {showImgConverter && <ImgConverter borderColor={boxShadowColor} />}
         {showSettings && <Settigns />}
       </div>

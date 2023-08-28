@@ -1,12 +1,15 @@
 import "./ImgConverter.css";
 import { useState } from "react";
 
+import { saveAs } from "file-saver";
+
 type ImgConverterProps = {
   borderColor: string;
 };
 
 export default function ImgConverter({ borderColor }: ImgConverterProps) {
   const [dragAndDropFile, setDragAndDropFile] = useState<File | undefined>();
+  const [fileName, setFileName] = useState<string>("");
 
   const [showFileType, setShowFileType] = useState<boolean>(false);
 
@@ -24,8 +27,6 @@ export default function ImgConverter({ borderColor }: ImgConverterProps) {
       files: FileList;
     };
 
-    console.log(target.files[0].type);
-
     if (!validateImage(target.files[0].type)) {
       setShowConvertButton(false);
       setShowConvertTypes(false);
@@ -37,8 +38,8 @@ export default function ImgConverter({ borderColor }: ImgConverterProps) {
 
     setShowAvailableConvertTypes(true);
 
-    console.log("target", target.files);
     setDragAndDropFile(target.files[0]);
+    setFileName(target.files[0].name);
     setShowFileType(true);
   }
 
@@ -64,11 +65,26 @@ export default function ImgConverter({ borderColor }: ImgConverterProps) {
 
   function showAvailableFileTypes() {
     setShowConvertTypes(true);
-    console.log(availableConvertTypes);
   }
 
   function hideAvailableTypes() {
     setShowConvertTypes(false);
+  }
+
+  function downloadFile(item: string) {
+    const newFileName: string[] = fileName.split(".");
+
+    //ERROR WITH FILE NOT BEING FOUND
+    if (item == "png") {
+      saveAs(`${dragAndDropFile?.name}`, `${newFileName[0]}.png`);
+      return;
+    } else if (item == "jpeg") {
+      saveAs(`${dragAndDropFile?.name}`, `${newFileName[0]}.jpg`);
+      return;
+    } else if (item == "webp") {
+      saveAs(`${dragAndDropFile?.name}`, `${newFileName[0]}.webp`);
+      return;
+    }
   }
 
   return (
@@ -108,7 +124,11 @@ export default function ImgConverter({ borderColor }: ImgConverterProps) {
                   >
                     {availableConvertTypes!.map((item: string) => {
                       return (
-                        <button className="currentTypesBtn" key={item}>
+                        <button
+                          className="currentTypesBtn"
+                          key={item}
+                          onClick={() => downloadFile(item)}
+                        >
                           {item}
                         </button>
                       );
@@ -119,7 +139,9 @@ export default function ImgConverter({ borderColor }: ImgConverterProps) {
                   </div>
                 )}
               </div>
-              <div className="convertFileBtnContainer"></div>
+              <div className="convertFileBtnContainer">
+                <a href=""></a>
+              </div>
             </div>
           </div>
         </div>

@@ -39,10 +39,8 @@ export default function Todo({ borderColor }: TodoProps) {
     }, 900);
   }
 
-  const [todoIdx, setTodoIdx] = useState<number>(0);
-
   function createTodo() {
-    if (todoIdx === 4) {
+    if (currentTodos.length === 4) {
       //ADD BETTER ERROR
       alert("You have created the max amount of todos");
       return;
@@ -65,9 +63,6 @@ export default function Todo({ borderColor }: TodoProps) {
       title: newTodoTitle,
       body: todoBody,
     };
-
-    setTodoIdx((prev) => prev + 1);
-    console.log(todoIdx);
 
     setNewTodoTitle("");
 
