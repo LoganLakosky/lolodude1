@@ -16,6 +16,10 @@ export default function Notes({ borderColor }: NotesProps) {
   const [newNoteBody, setNewNoteBody] = useState<string>("");
   const [notesArr, setNotesArr] = useState<NotesArrProps[]>([]);
 
+  //Error states
+  const [nameError, setNameError] = useState<boolean>(false);
+  const [bodyError, setBodyError] = useState<boolean>(false);
+
   function updateNewNoteName(e: ChangeEvent<HTMLInputElement>) {
     setNewNoteName(e.target.value);
   }
@@ -32,13 +36,20 @@ export default function Notes({ borderColor }: NotesProps) {
 
     if (newNoteName == "" || newNoteName.length < 2) {
       //ADD BETTER ERROR
-      alert("Note Name Invalid");
+      setTimeout(() => {
+        setNameError(false);
+      }, 1200);
+      setNameError(true);
+
       return;
     }
 
     if (newNoteBody == "" || newNoteBody.length < 2) {
-      //ADD BETTER ERROR
-      alert("Note Body Invalid");
+      setTimeout(() => {
+        setBodyError(false);
+      }, 1200);
+      
+      setBodyError(true);
       return;
     }
 
@@ -59,7 +70,19 @@ export default function Notes({ borderColor }: NotesProps) {
     <div className="notesMainContainer">
       <div className="notesMainTop">
         <div className="newNoteNameContainer">
-          <label htmlFor="new-note-input">Enter note name:</label>
+          {!nameError && (
+            <label htmlFor="new-note-input" className="firstLabel">
+              Enter note name:
+            </label>
+          )}
+          {nameError && (
+            <label
+              htmlFor="new-note-input"
+              style={{ color: "red", fontSize: "14px", marginBottom: "4px" }}
+            >
+              Please enter a note name
+            </label>
+          )}
           <input
             value={newNoteName}
             type="text"

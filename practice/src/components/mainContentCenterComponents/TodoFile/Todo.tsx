@@ -21,6 +21,9 @@ export default function Todo({ borderColor }: TodoProps) {
   const [newTodoTitle, setNewTodoTitle] = useState<string>("");
   const [newTodoBody, setNewTodoBody] = useState<string>("");
 
+  //Error states
+  const [titleError, setTitleError] = useState<boolean>(false);
+
   function updateTodoTitleValue(e: ChangeEvent<HTMLInputElement>) {
     setNewTodoTitle(e.target.value);
   }
@@ -41,14 +44,16 @@ export default function Todo({ borderColor }: TodoProps) {
 
   function createTodo() {
     if (currentTodos.length === 4) {
-      //ADD BETTER ERROR
       alert("You have created the max amount of todos");
       return;
     }
 
     if (newTodoTitle === "") {
       //ADD BETTER ERROR
-      alert("Please add a title to your todo");
+      setTimeout(() => {
+        setTitleError(false);
+      }, 1200);
+      setTitleError(true);
       return;
     }
 
@@ -86,7 +91,12 @@ export default function Todo({ borderColor }: TodoProps) {
         {revealTodoCreationInputs && (
           <>
             <div className="titleInputContainer">
-              <label htmlFor="title-input">Todo Title:</label>
+              {!titleError && <label htmlFor="title-input">Todo Title:</label>}
+              {titleError && (
+                <label htmlFor="title-input" style={{ color: "red" }}>
+                  Please enter a title
+                </label>
+              )}
               <input
                 value={newTodoTitle}
                 type="text"

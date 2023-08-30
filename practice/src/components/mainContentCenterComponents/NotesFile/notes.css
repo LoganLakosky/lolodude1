@@ -24,7 +24,7 @@
   flex-direction: column;
 }
 
-.newNoteNameContainer label {
+.firstLabel {
   margin-right: 35px;
   margin-bottom: 4px;
 }
