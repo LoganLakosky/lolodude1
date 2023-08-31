@@ -24,7 +24,7 @@
   flex-direction: column;
 }
 
-.firstLabel {
+.noteFirstNameLabel {
   margin-right: 35px;
   margin-bottom: 4px;
 }
@@ -42,7 +42,7 @@
   flex-direction: column;
 }
 
-.newNoteBodyContainer label {
+.noteFirstBodyLabel {
   margin-right: 42px;
   margin-bottom: 4px;
 }

@@ -34,7 +34,7 @@ export default function Notes({ borderColor }: NotesProps) {
       return;
     }
 
-    if (newNoteName == "" || newNoteName.length < 2) {
+    if (newNoteName === "" || newNoteName.length < 2) {
       //ADD BETTER ERROR
       setTimeout(() => {
         setNameError(false);
@@ -44,11 +44,11 @@ export default function Notes({ borderColor }: NotesProps) {
       return;
     }
 
-    if (newNoteBody == "" || newNoteBody.length < 2) {
+    if (newNoteBody === "" || newNoteBody.length < 2) {
       setTimeout(() => {
         setBodyError(false);
       }, 1200);
-      
+
       setBodyError(true);
       return;
     }
@@ -71,7 +71,7 @@ export default function Notes({ borderColor }: NotesProps) {
       <div className="notesMainTop">
         <div className="newNoteNameContainer">
           {!nameError && (
-            <label htmlFor="new-note-input" className="firstLabel">
+            <label htmlFor="new-note-input" className="noteFirstNameLabel">
               Enter note name:
             </label>
           )}
@@ -92,7 +92,20 @@ export default function Notes({ borderColor }: NotesProps) {
           />
         </div>
         <div className="newNoteBodyContainer">
-          <label htmlFor="new-note-body">Enter note body:</label>
+          {!bodyError && (
+            <label htmlFor="new-note-body" className="noteFirstBodyLabel">
+              Enter note body:
+            </label>
+          )}
+          {bodyError && (
+            <label
+              className="bodySecondLabel"
+              htmlFor="new-note-body"
+              style={{ color: "red", fontSize: "14px", marginBottom: "4px" }}
+            >
+              Please enter a note body
+            </label>
+          )}
           <input
             value={newNoteBody}
             type="text"
