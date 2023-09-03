@@ -7,7 +7,7 @@ import Todo from "./mainContentCenterComponents/TodoFile/Todo";
 import Twitter from "./mainContentCenterComponents/TwitterFile/Twitter";
 import Notes from "./mainContentCenterComponents/NotesFile/NotesTop";
 import ImgConverter from "./mainContentCenterComponents/ImgConverterFile/ImgConverter";
-import Settigns from "./mainContentCenterComponents/SettingsFile/Settings";
+import Settings from "./mainContentCenterComponents/SettingsFile/Settings";
 
 type MainContentProps = {
   boxShadowColor: string;
@@ -112,7 +112,7 @@ export default function MainContent({ boxShadowColor }: MainContentProps) {
         {showTwitter && <Twitter />}
         {showNotes && <Notes borderColor={boxShadowColor} />}
         {showImgConverter && <ImgConverter borderColor={boxShadowColor} />}
-        {showSettings && <Settigns />}
+        {showSettings && <Settings />}
       </div>
     </div>
   );

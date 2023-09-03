@@ -1,3 +1,5 @@
+import { initializeApp } from "firebase/app";
+import { getFirestore, doc, getDoc } from "firebase/firestore";
 import NotesMain from "./NotesMain";
 import "./notes.css";
 import { ChangeEvent, useState } from "react";
@@ -10,6 +12,32 @@ type NotesArrProps = {
 type NotesProps = {
   borderColor: string;
 };
+
+const firebaseConfig = {
+  apiKey: "AIzaSyCGerpumjP0QVhO_WkM5Awu43MeqOJcByk",
+  authDomain: "practice-3296b.firebaseapp.com",
+  projectId: "practice-3296b",
+  storageBucket: "practice-3296b.appspot.com",
+  messagingSenderId: "278791250657",
+  appId: "1:278791250657:web:57ec2fc5ed5c4bf0580da0",
+  measurementId: "G-YESYRJXZ2S",
+};
+
+const app = initializeApp(firebaseConfig);
+
+const db = getFirestore(app);
+
+async function getAllDocuments() {
+  const querySnapshot = await getDocs(collection(db, "userInformation"));
+  querySnapshot.forEach((doc) => {
+    // doc.data() is never undefined for query doc snapshots
+    console.log(doc.id, " => ", doc.data());
+  });
+}
+
+function timeout(fn: any, delay: number) {
+  setTimeout(() => {});
+}
 
 export default function Notes({ borderColor }: NotesProps) {
   const [newNoteName, setNewNoteName] = useState<string>("");

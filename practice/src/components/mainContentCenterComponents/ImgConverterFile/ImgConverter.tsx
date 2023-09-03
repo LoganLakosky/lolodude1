@@ -5,7 +5,7 @@ import { saveAs } from "file-saver";
 
 type ImgConverterProps = {
   borderColor: string;
-};
+}
 
 export default function ImgConverter({ borderColor }: ImgConverterProps) {
   const [dragAndDropFile, setDragAndDropFile] = useState<File | undefined>();
