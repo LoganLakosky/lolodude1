@@ -1,10 +1,15 @@
 import { initializeApp } from "firebase/app";
-import { getFirestore, doc, getDoc } from "firebase/firestore";
+import { getFirestore, doc, getDoc, setDoc } from "firebase/firestore";
 import NotesMain from "./NotesMain";
 import "./notes.css";
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 
-type NotesArrProps = {
+type NotesArr = {
+  name: string;
+  body: string;
+};
+
+type BackupNotesArr = {
   name: string;
   body: string;
 };
@@ -14,39 +19,67 @@ type NotesProps = {
 };
 
 const firebaseConfig = {
-  apiKey: "AIzaSyCGerpumjP0QVhO_WkM5Awu43MeqOJcByk",
-  authDomain: "practice-3296b.firebaseapp.com",
-  projectId: "practice-3296b",
-  storageBucket: "practice-3296b.appspot.com",
-  messagingSenderId: "278791250657",
-  appId: "1:278791250657:web:57ec2fc5ed5c4bf0580da0",
-  measurementId: "G-YESYRJXZ2S",
+  apiKey: process.env.APIKEY,
+  authDomain: process.env.AUTHDOMAIN,
+  projectId: process.env.PROJECTID,
+  storageBucket: process.env.STORAGEBUCKET,
+  messagingSenderId: process.env.MESSAGINGSENDERID,
+  appId: process.env.APPID,
+  measurementId: process.env.MEASUREMENTID,
 };
 
 const app = initializeApp(firebaseConfig);
 
 const db = getFirestore(app);
 
-async function getAllDocuments() {
-  const querySnapshot = await getDocs(collection(db, "userInformation"));
-  querySnapshot.forEach((doc) => {
-    // doc.data() is never undefined for query doc snapshots
-    console.log(doc.id, " => ", doc.data());
-  });
-}
+//Start of helper functions
 
 function timeout(fn: any, delay: number) {
-  setTimeout(() => {});
+  setTimeout(() => {
+    fn(true);
+  }, delay);
+}
+
+async function postNote(name: string, body: string) {
+  await setDoc(doc(db, "Notes", name), {
+    name: name,
+    body: body,
+  });
 }
 
 export default function Notes({ borderColor }: NotesProps) {
   const [newNoteName, setNewNoteName] = useState<string>("");
   const [newNoteBody, setNewNoteBody] = useState<string>("");
-  const [notesArr, setNotesArr] = useState<NotesArrProps[]>([]);
+  const [notesArr, setNotesArr] = useState<NotesArr[]>([]);
 
   //Error states
   const [nameError, setNameError] = useState<boolean>(false);
   const [bodyError, setBodyError] = useState<boolean>(false);
+  const [backUpNotesArr, setBackupNotesArr] = useState<BackupNotesArr[]>([]);
+
+  useEffect(() => {
+    getDocuments();
+  }, []);
+
+  //Pass this down
+  async function getDocuments() {
+    const temp: any = [];
+
+    for (let i = 1; i < 4; i++) {
+      const docRef = doc(db, "Notes", `Note${i}`);
+      const docSnap = await getDoc(docRef);
+
+      const data = docSnap.data();
+
+      if (data) {
+        temp.push(data);
+      } else {
+        setBackupNotesArr(temp);
+
+        return;
+      }
+    }
+  }
 
   function updateNewNoteName(e: ChangeEvent<HTMLInputElement>) {
     setNewNoteName(e.target.value);
@@ -64,18 +97,15 @@ export default function Notes({ borderColor }: NotesProps) {
 
     if (newNoteName === "" || newNoteName.length < 2) {
       //ADD BETTER ERROR
-      setTimeout(() => {
-        setNameError(false);
-      }, 1200);
+      timeout(setNameError, 1200);
+
       setNameError(true);
 
       return;
     }
 
     if (newNoteBody === "" || newNoteBody.length < 2) {
-      setTimeout(() => {
-        setBodyError(false);
-      }, 1200);
+      timeout(setBodyError, 1200);
 
       setBodyError(true);
       return;
@@ -84,12 +114,7 @@ export default function Notes({ borderColor }: NotesProps) {
     setNewNoteName("");
     setNewNoteBody("");
 
-    const newNotes: NotesArrProps = {
-      name: newNoteName,
-      body: newNoteBody,
-    };
-
-    setNotesArr((prev) => [...prev, newNotes]);
+    postNote(newNoteName, newNoteBody);
   }
 
   function goToNote() {}
@@ -150,7 +175,7 @@ export default function Notes({ borderColor }: NotesProps) {
       </div>
       <div className="notesMainContentContainer">
         <div className="notesContainer">
-          {notesArr?.map((item) => {
+          {backUpNotesArr?.map((item) => {
             return (
               <div
                 className="noteContainer"

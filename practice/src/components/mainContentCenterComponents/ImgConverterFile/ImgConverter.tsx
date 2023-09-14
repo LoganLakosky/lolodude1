@@ -140,7 +140,6 @@ export default function ImgConverter({ borderColor }: ImgConverterProps) {
                 )}
               </div>
               <div className="convertFileBtnContainer">
-                <a href=""></a>
               </div>
             </div>
           </div>
@@ -149,3 +148,5 @@ export default function ImgConverter({ borderColor }: ImgConverterProps) {
     </div>
   );
 }
+
+//Notes Note1 //Note2
